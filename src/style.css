@@ -1,0 +1,164 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.container {
+    box-sizing: border-box;
+    transition: opacity .5s ease;
+    min-height: 100vh;
+}
+
+.header {
+    box-sizing: border-box;
+    border-bottom: 2px solid #111;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+}
+
+.main {
+    --editor-container-height: 0px;
+
+    height: calc(100vh - 40px);
+}
+
+.editor-container {
+    height: var(--editor-container-height);
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.divider {
+    box-sizing: border-box;
+    height: 10px;
+    background-color: #111;
+    cursor: row-resize;
+}
+
+.data-table {
+    box-sizing: border-box;
+    height: calc(100% - var(--editor-container-height) - 10px);
+    padding: 4px;
+    overflow: auto;
+}
+
+.data-table table {
+    border-collapse: collapse;
+    border: 2px solid #111;
+}
+
+.data-table table th {
+    border: 2px solid #111;
+    padding: 4px 8px;
+}
+
+.data-table table td {
+    border: 2px solid #111;
+    padding: 4px 8px;
+}
+
+.pen-input {
+    height: 30px;
+    box-sizing: border-box;
+    background-color: #fff;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 2px solid #111;
+    border-radius: 4px;
+    padding: 0 8px;
+    margin: 0;
+    font-size: 14px;
+    transition: all .15s ease;
+}
+
+.pen-select {
+    height: 30px;
+    box-sizing: border-box;
+    background-color: #fff;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 2px solid #111;
+    border-radius: 4px;
+    padding: 0 8px;
+    margin: 0;
+    font-size: 14px;
+    transition: all .15s ease;
+}
+
+.pen-button {
+    height: 30px;
+    min-width: 80px;
+    box-sizing: border-box;
+    background-color: #fff;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 2px solid #111;
+    border-radius: 4px;
+    margin: 0;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all .15s ease;
+}
+
+.pen-button:hover {
+    background-color: #111;
+    color: #fff;
+}
+
+.pen-button:active {
+    background-color: #111;
+    color: #fff;
+    transform: translateY(1px);
+}
+
+.pen-button:disabled {
+    background-color: #fff;
+    color: #111;
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+.text-base {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.opacity-0 {
+    opacity: 0;
+}
+
+.opacity-100 {
+    opacity: 1;
+}
+
+.select-none {
+    user-select: none;
+}
+
+.color-black {
+    color: #111;
+}
+
+.no-underline {
+    text-decoration: none;
+}
+
+.flex {
+    display: flex;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.whitespace-nowrap {
+    white-space: nowrap;
+}
