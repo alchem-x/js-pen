@@ -6,7 +6,7 @@ import Select from './Select.js'
 import Button from './Button.js'
 import UrlInput from './UrlInput.js'
 import { querySql } from './sql.js'
-import { sleep } from './schedule.js'
+import { readAsText } from './file.js'
 
 const { computed } = Vue
 
@@ -20,9 +20,8 @@ export default {
         <UrlInput v-if="isQueryMode"
                   :value="state.sqlQueryUrl"
                   :on-input="handleSqlQueryUrlInput"/>
-        <Button v-if="showRunButton" style="width: 60px;" :on-click="handleRun">
-          运行
-        </Button>
+        <Button v-if="showOpenFileButton" style="width: 60px;" :on-click="handleOpenFile">打开文件</Button>
+        <Button v-if="showRunButton" style="width: 60px;" :on-click="handleRun">运行</Button>
         <Select style="width: 100px;"
                 :value="state.language"
                 :options="languageOptions"
@@ -44,7 +43,14 @@ export default {
             props.state.sqlQueryUrl = ev.trim()
         }
 
+        const showOpenFileButton = computed(() => {
+            return !props.state.contentValue;
+        })
+
         const showRunButton = computed(() => {
+            if (!props.state.contentValue) {
+                return false
+            }
             if (props.isQueryMode) {
                 return true
             }
@@ -57,9 +63,23 @@ export default {
             }
         }
 
+        function handleOpenFile(ev) {
+            const inputRef = document.createElement('input')
+            inputRef.type = 'file'
+            inputRef.addEventListener('change', async (ev) => {
+                const file = ev.target.files[0]
+                if (!file) {
+                    return
+                }
+                props.state.contentValue = await readAsText(file)
+                inputRef.remove()
+            })
+            document.body.appendChild(inputRef)
+            inputRef.click()
+        }
+
         function runJavaScript() {
             runJs(props.state.contentValue, true)
-            return sleep(300)
         }
 
         async function runSqlQuery() {
@@ -96,6 +116,8 @@ export default {
         return {
             languageOptions,
             handleLanguageChange,
+            handleOpenFile,
+            showOpenFileButton,
             handleRun,
             showRunButton,
             handleSqlQueryUrlInput,

@@ -1,10 +1,10 @@
 import { monaco, Vue } from './dependencies.js'
 
-const { onMounted, ref } = Vue
+const { onMounted, ref, watch } = Vue
 
 export default {
     template: `
-      <div ref="editorContainer" class="editor-container"/>
+      <div ref="editorContainerRef" class="editor-container"/>
     `,
     props: {
         state: {
@@ -12,10 +12,18 @@ export default {
         },
     },
     setup(props) {
-        const editorContainer = ref()
+        const editorContainerRef = ref()
+        let editor
+
+        watch(() => props.state.contentValue, (val) => {
+            if (!editor || editor.getModel().getValue() === val) {
+                return
+            }
+            editor.getModel().setValue(val)
+        })
 
         onMounted(() => {
-            const editor = monaco.editor.create(editorContainer.value, {
+            editor = monaco.editor.create(editorContainerRef.value, {
                 value: props.state.contentValue,
                 language: props.state.language,
                 automaticLayout: true,
@@ -28,7 +36,10 @@ export default {
             })
 
             editor.getModel().onDidChangeContent((ev) => {
-                props.state.contentValue = editor.getModel().getValue() || ''
+                const newVal = editor.getModel().getValue() || ''
+                if (props.state.contentValue !== newVal) {
+                    props.state.contentValue = newVal
+                }
             })
 
             editor.onDidChangeCursorSelection((ev) => {
@@ -39,7 +50,7 @@ export default {
         })
 
         return {
-            editorContainer,
+            editorContainerRef,
         }
     },
 }
