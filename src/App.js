@@ -17,7 +17,7 @@ export default {
       <main class="main" ref="mainRef">
         <Editor :state="state"/>
         <template v-if="isQueryMode">
-          <div @mousedown="handleResize" class="divider"></div>
+          <div @mousedown="startResize" class="divider"></div>
           <DataTable :state="state"/>
         </template>
       </main>
@@ -65,7 +65,7 @@ export default {
             saveSqlQueryUrl(val)
         }, 100))
 
-        function handleResize(ev) {
+        function startResize(ev) {
             const prevY = ev.y
             const editorContainerHeight = parseFloat(mainRef.value.style.getPropertyValue('--editor-container-height'))
 
@@ -93,7 +93,7 @@ export default {
             state,
             mainRef,
             isQueryMode,
-            handleResize,
+            startResize,
         }
     },
     components: {

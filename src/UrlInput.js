@@ -8,7 +8,7 @@ export default {
              placeholder="输入查询URL"
              :value="value"
              :title="value"
-             @input="handleInput"
+             @input="onInput($event.target.value)"
              @focus="inputting = true"
              @blur="inputting = false">
     `,
@@ -18,6 +18,7 @@ export default {
         },
         onInput: {
             type: Function,
+            default: () => () => undefined,
         },
     },
     setup(props) {
@@ -30,14 +31,9 @@ export default {
             }
         })
 
-        function handleInput(ev) {
-            props.onInput?.(ev.target.value)
-        }
-
         return {
             inputting,
             style,
-            handleInput,
         }
     }
 }

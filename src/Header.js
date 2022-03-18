@@ -19,13 +19,13 @@ export default {
       <div class="flex items-center" style="gap: 8px;">
         <UrlInput v-if="isQueryMode"
                   :value="state.sqlQueryUrl"
-                  :on-input="handleSqlQueryUrlInput"/>
-        <Button v-if="showOpenFileButton" style="width: 60px;" :on-click="handleOpenFile">打开文件</Button>
-        <Button v-if="showRunButton" style="width: 60px;" :on-click="handleRun">运行</Button>
+                  :on-input="onSqlQueryUrlInput"/>
+        <Button v-if="showOpenFileButton" style="width: 60px;" :on-click="openFile">打开文件</Button>
+        <Button v-if="showRunButton" style="width: 60px;" :on-click="run">运行</Button>
         <Select style="width: 100px;"
                 :value="state.language"
                 :options="languageOptions"
-                :on-change="handleLanguageChange"/>
+                :on-change="onLanguageChange"/>
       </div>
       </header>
     `,
@@ -39,7 +39,7 @@ export default {
         },
     },
     setup(props) {
-        function handleSqlQueryUrlInput(ev) {
+        function onSqlQueryUrlInput(ev) {
             props.state.sqlQueryUrl = ev.trim()
         }
 
@@ -57,13 +57,13 @@ export default {
             return [LANGUAGE_TYPE.JAVASCRIPT,].includes(props.state.language)
         })
 
-        function handleLanguageChange(ev) {
+        function onLanguageChange(ev) {
             if (ev !== props.state.language) {
                 changeLanguage(ev)
             }
         }
 
-        function handleOpenFile(ev) {
+        function openFile(ev) {
             const inputRef = document.createElement('input')
             inputRef.type = 'file'
             inputRef.addEventListener('change', async (ev) => {
@@ -102,7 +102,7 @@ export default {
             }
         }
 
-        function handleRun() {
+        function run() {
             switch (props.state.language) {
                 case LANGUAGE_TYPE.JAVASCRIPT:
                     return runJavaScript()
@@ -115,12 +115,12 @@ export default {
 
         return {
             languageOptions,
-            handleLanguageChange,
-            handleOpenFile,
+            onLanguageChange,
+            openFile,
             showOpenFileButton,
-            handleRun,
+            run,
             showRunButton,
-            handleSqlQueryUrlInput,
+            onSqlQueryUrlInput,
             indexUrl: location.pathname.startsWith('/js-pen/') ? '/js-pen/' : '/'
         }
     },

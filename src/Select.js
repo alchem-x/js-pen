@@ -1,6 +1,6 @@
 export default {
     template: `
-      <select class="pen-select" :value="value" @change="handleChange">
+      <select class="pen-select" :value="value" @change="onChange($event.target.value)">
       <option v-for="it of options" :key="it.value" :value="it.value">
         {{ it.label }}
       </option>
@@ -16,15 +16,7 @@ export default {
         },
         onChange: {
             type: Function,
+            default: () => () => undefined,
         },
-    },
-    setup(props) {
-        function handleChange(ev) {
-            props.onChange?.(ev.target.value)
-        }
-
-        return {
-            handleChange,
-        }
     },
 }

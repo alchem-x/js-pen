@@ -4,7 +4,7 @@ const { ref } = Vue
 
 export default {
     template: `
-      <button class="pen-button" :disabled="disabled" @click="handleClick">
+      <button class="pen-button" :disabled="disabled" @click="onInternalClick">
       <slot></slot>
       </button>
     `,
@@ -16,7 +16,7 @@ export default {
     setup(props) {
         const disabled = ref(false)
 
-        async function handleClick() {
+        async function onInternalClick() {
             try {
                 disabled.value = true
                 await props.onClick?.()
@@ -27,7 +27,7 @@ export default {
 
         return {
             disabled,
-            handleClick,
+            onInternalClick,
         }
     }
 }
