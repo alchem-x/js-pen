@@ -18,7 +18,7 @@ export default {
         },
         onInput: {
             type: Function,
-            default: () => () => undefined,
+            default: () => undefined,
         },
     },
     setup(props) {

@@ -16,7 +16,7 @@ export default {
         },
         onChange: {
             type: Function,
-            default: () => () => undefined,
+            default: () => undefined,
         },
     },
 }

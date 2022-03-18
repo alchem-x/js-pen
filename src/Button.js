@@ -11,6 +11,7 @@ export default {
     props: {
         onClick: {
             type: Function,
+            default: () => undefined,
         }
     },
     setup(props) {
