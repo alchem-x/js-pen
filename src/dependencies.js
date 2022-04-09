@@ -1,11 +1,18 @@
 import loadJs from './loadJs.js'
 
-await loadJs('https://unpkg.com/monaco-editor@0.32.1/min/vs/loader.js')
+function withCdn(url) {
+    const CDN_BASE = 'https://cdn.staticfile.org/'
+    return new URL(url, CDN_BASE).toString()
+}
+
+await Promise.all([
+    loadJs(withCdn('/monaco-editor/0.33.0/min/vs/loader.js')),
+    loadJs(withCdn('/vue/3.2.31/vue.global.prod.min.js')),
+])
 
 window.require.config({
     paths: {
-        vs: 'https://unpkg.com/monaco-editor@0.32.1/min/vs',
-        vue: 'https://unpkg.com/vue-umd@3.2.31/dist/vue.umd',
+        vs: withCdn('/monaco-editor/0.33.0/min/vs'),
     },
     'vs/nls': {
         availableLanguages: {
@@ -16,10 +23,10 @@ window.require.config({
 
 function getDependencies() {
     return new Promise((resolve) => {
-        window.require(['vs/editor/editor.main', 'vue'], (monaco, Vue) => {
+        window.require(['vs/editor/editor.main'], (monaco) => {
             resolve({
                 monaco,
-                Vue,
+                Vue: window.Vue,
             })
         })
     })

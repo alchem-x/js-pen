@@ -7,7 +7,9 @@ export default {
       <div class="data-table">
       <table>
         <thead>
+        <tr>
         <th v-for="it of headerList" :key="it">{{ it }}</th>
+        </tr>
         </thead>
         <tbody>
         <tr v-for="(data, index) of dataList" :key="index">
