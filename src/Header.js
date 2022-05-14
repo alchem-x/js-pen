@@ -1,5 +1,5 @@
-import { Vue } from './dependencies.js'
-import { LANGUAGE_TYPE, languageOptions } from './language.js'
+import { Vue, saveAs } from './dependencies.js'
+import { getFileExtension, LANGUAGE_TYPE, languageOptions } from './language.js'
 import { changeLanguage } from './urlSearchParams.js'
 import runJs from './runJs.js'
 import Select from './Select.js'
@@ -22,6 +22,7 @@ export default {
                   :on-input="onSqlQueryUrlInput"/>
         <Button v-if="showOpenFileButton" style="width: 60px;" :on-click="openFile">打开文件</Button>
         <Button v-if="showRunButton" style="width: 60px;" :on-click="run">运行</Button>
+        <Button v-if="showSaveButton" style="width: 60px;" :on-click="saveToFile">保存</Button>
         <Select style="width: 100px;"
                 :value="state.language"
                 :options="languageOptions"
@@ -45,6 +46,10 @@ export default {
 
         const showOpenFileButton = computed(() => {
             return !props.state.contentValue;
+        })
+
+        const showSaveButton = computed(() => {
+            return props.state.contentValue;
         })
 
         const showRunButton = computed(() => {
@@ -113,13 +118,22 @@ export default {
             }
         }
 
+        function saveToFile() {
+            const content = props.state.contentValue?.toString()
+            const fileBlob = new Blob([content])
+            const filename = `${new Date().toISOString()}.${getFileExtension(props.state.language)}`
+            saveAs(fileBlob, filename)
+        }
+
         return {
             languageOptions,
             onLanguageChange,
-            openFile,
             showOpenFileButton,
-            run,
+            openFile,
             showRunButton,
+            run,
+            showSaveButton,
+            saveToFile,
             onSqlQueryUrlInput,
             indexUrl: location.pathname.startsWith('/js-pen/') ? '/js-pen/' : '/'
         }

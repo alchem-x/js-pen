@@ -34,3 +34,15 @@ export const languageOptions = Object.keys(LANGUAGE_TYPE).map((it) => {
 
 export const languageList = Object.keys(LANGUAGE_TYPE).map((it) => LANGUAGE_TYPE[it])
 
+export function getFileExtension(language) {
+    switch (language) {
+        case LANGUAGE_TYPE.JAVASCRIPT:
+            return 'js'
+        case LANGUAGE_TYPE.MARKDOWN:
+            return 'md'
+        case LANGUAGE_TYPE.PLAINTEXT:
+            return 'txt'
+        default:
+            return language
+    }
+}

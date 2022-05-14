@@ -45,7 +45,7 @@ export default {
         function initializeEditorContainerHeight() {
             const mainClientHeight = mainRef.value.clientHeight
             if (isQueryMode.value) {
-                const editorContainerHeight = (mainClientHeight / 3)
+                const editorContainerHeight = (mainClientHeight * 0.6)
                 mainRef.value.style.setProperty('--editor-container-height', editorContainerHeight + 'px')
             } else {
                 mainRef.value.style.setProperty('--editor-container-height', mainClientHeight + 'px')

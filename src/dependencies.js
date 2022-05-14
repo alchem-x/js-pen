@@ -6,30 +6,31 @@ function withCdn(url) {
 }
 
 await Promise.all([
-    loadJs(withCdn('/monaco-editor/0.33.0/min/vs/loader.js')),
     loadJs(withCdn('/vue/3.2.31/vue.global.prod.min.js')),
+    loadJs(withCdn('/FileSaver.js/2.0.5/FileSaver.min.js')),
 ])
 
-window.require.config({
-    paths: {
-        vs: withCdn('/monaco-editor/0.33.0/min/vs'),
-    },
-    'vs/nls': {
-        availableLanguages: {
-            '*': 'zh-cn'
-        },
-    },
-})
+async function getMonaco() {
+    await loadJs(withCdn('/monaco-editor/0.33.0/min/vs/loader.js'))
 
-function getDependencies() {
+    window.require.config({
+        paths: {
+            vs: withCdn('/monaco-editor/0.33.0/min/vs'),
+        },
+        'vs/nls': {
+            availableLanguages: {
+                '*': 'zh-cn'
+            },
+        },
+    })
+
     return new Promise((resolve) => {
         window.require(['vs/editor/editor.main'], (monaco) => {
-            resolve({
-                monaco,
-                Vue: window.Vue,
-            })
+            resolve(monaco)
         })
     })
 }
 
-export const { monaco, Vue } = await getDependencies()
+export const monaco = await getMonaco()
+export const Vue = window.Vue
+export const saveAs = window.saveAs
