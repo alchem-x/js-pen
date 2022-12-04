@@ -1,4 +1,6 @@
 export const LANGUAGE_TYPE = {
+    PLAINTEXT: 'plaintext',
+    MARKDOWN: 'markdown',
     JAVASCRIPT: 'javascript',
     JSON: 'json',
     HTML: 'html',
@@ -7,8 +9,6 @@ export const LANGUAGE_TYPE = {
     XML: 'xml',
     JAVA: 'java',
     C: 'c',
-    MARKDOWN: 'markdown',
-    PLAINTEXT: 'plaintext',
 }
 
 const languageLabel = {
